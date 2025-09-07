@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Muhammed Megahed | Data Scientist Portfolio</title>
+  <meta name="description" content="Portfolio of Muhammed Megahed Ali — Data Scientist (Python, SQL, Power BI, ML)" />
+
+  <!-- Tailwind Config (enable dark mode by class) -->
+  <script>tailwind=undefined; tailwind||(window.tailwind={}); tailwind.config={darkMode:'class'};</script>
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --glass: rgba(0,0,0,0.05);
+      --glass-strong: rgba(0,0,0,0.1);
+    }
+    .dark:root{
+      --glass: rgba(255,255,255,0.08);
+      --glass-strong: rgba(255,255,255,0.16);
+    }
+    html{scroll-behavior:smooth}
+    body{font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial, "Apple Color Emoji", "Segoe UI Emoji"}
+
+    /* Backdrops */
+    .bg-aurora{
+      background: radial-gradient(1200px 600px at 10% -10%, rgba(59,130,246,.25), transparent 60%),
+                  radial-gradient(1000px 500px at 100% 10%, rgba(16,185,129,.20), transparent 60%),
+                  radial-gradient(900px 600px at 50% 110%, rgba(236,72,153,.20), transparent 60%),
+                  linear-gradient(180deg, #0b1020, #0a0f1a);
+      background-attachment: fixed;
+    }
+    .light-bg{ /* for light theme */
+      background: radial-gradient(1200px 600px at 10% -10%, rgba(59,130,246,.10), transparent 60%),
+                  radial-gradient(1000px 500px at 100% 10%, rgba(16,185,129,.10), transparent 60%),
+                  radial-gradient(900px 600px at 50% 110%, rgba(236,72,153,.10), transparent 60%),
+                  linear-gradient(180deg, #ffffff, #f6f7fb);
+      background-attachment: fixed;
+    }
+    .glass{background: var(--glass); backdrop-filter: blur(10px); border:1px solid rgba(255,255,255,0.08)}
+    .shine{position:relative; overflow:hidden}
+    .shine:after{content:""; position:absolute; inset:-200%; background: conic-gradient(from 180deg at 50% 50%, transparent 0deg, rgba(255,255,255,0.08) 90deg, transparent 180deg); animation: spin 10s linear infinite}
+    @keyframes spin{to{transform: rotate(1turn)}}
+    .dot-grid{background-image: radial-gradient(rgba(0,0,0,0.08) 1px, transparent 1px); background-size: 20px 20px}
+    .dark .dot-grid{background-image: radial-gradient(rgba(255,255,255,0.08) 1px, transparent 1px)}
+
+    /* Smooth icon transition */
+    .icon-swap svg{transition: opacity .2s ease, transform .2s ease}
+    .icon-swap .sun{opacity:0; transform: scale(.9)}
+    .light .icon-swap .sun{opacity:1; transform: scale(1)}
+    .light .icon-swap .moon{opacity:0; transform: scale(.9)}
+
+    /* Utility text colors bridging dark/light */
+    .text-body{color:#2a2a2a}
+    .text-muted{color:#5c5f66}
+    .dark .text-body{color:#e5e7eb}
+    .dark .text-muted{color:#a1a1aa}
+  </style>
+</head>
+<body class="bg-aurora dark:text-zinc-100 light:text-zinc-900">
+  <!-- NAV -->
+  <header class="sticky top-0 z-50 backdrop-blur">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center gap-3">
+      <div class="w-9 h-9 rounded-xl bg-black/5 dark:bg-white/10 grid place-items-center shadow ring-1 ring-black/5 dark:ring-white/10">
+        <span class="text-xl font-black">M</span>
+      </div>
+      <nav class="ml-auto hidden md:flex items-center gap-6 text-sm text-muted">
+        <a href="#about" class="hover:text-body" data-i18n="nav.about">About</a>
+        <a href="#skills" class="hover:text-body" data-i18n="nav.skills">Skills</a>
+        <a href="#experience" class="hover:text-body" data-i18n="nav.experience">Experience</a>
+        <a href="#projects" class="hover:text-body" data-i18n="nav.projects">Projects</a>
+        <a href="#education" class="hover:text-body" data-i18n="nav.education">Education</a>
+        <a href="#certs" class="hover:text-body" data-i18n="nav.certs">Certificates</a>
+        <a href="#contact" class="hover:text-body" data-i18n="nav.contact">Contact</a>
+      </nav>
+      <div class="ml-2 flex items-center gap-2">
+        <!-- Language Toggle -->
+        <button id="langToggle" class="text-xs px-3 py-2 rounded-lg glass hover:bg-black/5 dark:hover:bg-white/10 flex items-center gap-2" aria-label="Toggle language">
+          <span id="langLabel">AR</span>
+        </button>
+        <!-- Theme Toggle -->
+        <button id="themeToggle" class="text-xs px-3 py-2 rounded-lg glass hover:bg-black/5 dark:hover:bg-white/10 flex items-center gap-2 icon-swap" aria-label="Toggle theme">
+          <!-- Moon (for dark) -->
+          <svg class="moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <!-- Sun (for light) -->
+          <svg class="sun absolute" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+          <span id="themeLabel" class="hidden md:inline">Theme</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+<section class="relative">
+  <div class="absolute inset-0 dot-grid opacity-20"></div>
+  <div class="max-w-6xl mx-auto px-4 py-16 md:py-24 grid md:grid-cols-12 gap-8 items-center">
+    
+    <!-- Left Side (Text) -->
+    <div class="md:col-span-7">
+      <h1 class="text-4xl md:text-6xl font-black leading-tight">
+        <span data-i18n="hero.name">Muhammed Megahed Ali</span>
+      </h1>
+      <p class="mt-4 text-lg md:text-xl text-muted" data-i18n="hero.tag">Data Scientist • Python • SQL • Power BI • Machine Learning</p>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a href="#projects" class="px-5 py-3 rounded-xl bg-sky-500 hover:bg-sky-400 text-white font-semibold shadow-lg shadow-sky-700/20" data-i18n="hero.viewProjects">View Projects</a>
+        <a href="#contact" class="px-5 py-3 rounded-xl glass hover:bg-black/5 dark:hover:bg-white/10 font-semibold" data-i18n="hero.hireMe">Hire Me</a>
+        <a href="mailto:muhammedmegahed997@gmail.com" class="px-5 py-3 rounded-xl glass hover:bg-black/5 dark:hover:bg-white/10 font-semibold" data-i18n="hero.email">Email</a>
+      </div>
+      <div class="mt-6 text-sm text-muted" data-i18n="hero.location">
+        Haram, Giza • English & Arabic • Open to internships, research, and data roles
+      </div>
+    </div>
+
+    <!-- Right Side (Image + Contact Info) -->
+    <div class="md:col-span-5 flex flex-col items-center gap-6">
+      
+
+      <!-- Contact Card -->
+      <div class="glass shine rounded-2xl p-6 border-white/10 w-full">
+        <ul class="space-y-3 text-sm">
+          <li><span class="text-muted" data-i18n="hero.phoneLabel">Phone:</span> <a class="hover:underline" href="tel:+201550167733">+20 155 016 7733</a></li>
+          <li><span class="text-muted" data-i18n="hero.emailLabel">Email:</span> <a class="hover:underline" href="mailto:muhammedmegahed997@gmail.com">muhammedmegahed997@gmail.com</a></li>
+          <li><span class="text-muted">LinkedIn:</span> <a class="hover:underline" target="_blank" href="https://www.linkedin.com/in/muhammad-mugahed-ali-616669240/">/muhammad-mugahed-ali</a></li>
+          <li><span class="text-muted">GitHub:</span> <a class="hover:underline" target="_blank" href="https://github.com/MuhammedMegahed">@MuhammedMegahed</a></li>
+        </ul>
+        <div class="mt-6 grid grid-cols-3 gap-3 text-center">
+          <div class="glass rounded-xl p-4">
+            <div class="text-2xl font-extrabold">3.89</div>
+            <div class="text-xs text-muted" data-i18n="hero.gpa">GPA</div>
+          </div>
+          <div class="glass rounded-xl p-4">
+            <div class="text-2xl font-extrabold">14+</div>
+            <div class="text-xs text-muted" data-i18n="hero.projects">Projects</div>
+          </div>
+          <div class="glass rounded-xl p-4">
+            <div class="text-2xl font-extrabold">2</div>
+            <div class="text-xs text-muted" data-i18n="hero.internships">Internships</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+  <!-- ABOUT -->
+  <section id="about" class="py-12 md:py-16">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="glass rounded-2xl p-6 md:p-10">
+        <h2 class="text-2xl md:text-3xl font-bold" data-i18n="about.title">About</h2>
+        <p class="mt-4 text-muted leading-relaxed" data-i18n="about.p1">Aspiring Data Scientist with a strong academic background from Nile University and hands-on experience building predictive models and insightful dashboards. Skilled in Python, SQL, Power BI, and core ML concepts. Passionate about turning data into meaningful, decision-ready insights.</p>
+        <p class="mt-3 text-muted leading-relaxed" data-i18n="about.p2">I thrive on curiosity, problem solving, and collaboration—seeking opportunities across research, internships, and data-driven roles to create measurable impact.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" class="py-12">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-2xl md:text-3xl font-bold mb-6" data-i18n="skills.title">Skills</h2>
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="glass rounded-2xl p-6">
+          <h3 class="font-semibold" data-i18n="skills.col1">Data & ML</h3>
+          <ul class="mt-3 space-y-1 text-sm text-muted list-disc pl-5">
+            <li data-i18n="skills.col1li1">Python (Pandas, NumPy, Matplotlib, Scikit‑learn)</li>
+            <li data-i18n="skills.col1li2">Regression, Classification, Basic Deep Learning</li>
+            <li data-i18n="skills.col1li3">EDA, Feature Engineering</li>
+          </ul>
+        </div>
+        <div class="glass rounded-2xl p-6">
+          <h3 class="font-semibold" data-i18n="skills.col2">BI & Dashboards</h3>
+          <ul class="mt-3 space-y-1 text-sm text-muted list-disc pl-5">
+            <li data-i18n="skills.col2li1">Power BI (Modeling, DAX, Transformations)</li>
+            <li data-i18n="skills.col2li2">Excel Dashboards & Data Cleaning</li>
+            <li data-i18n="skills.col2li3">Plotly, Folium (Geo‑viz)</li>
+          </ul>
+        </div>
+        <div class="glass rounded-2xl p-6">
+          <h3 class="font-semibold" data-i18n="skills.col3">Professional</h3>
+          <ul class="mt-3 space-y-1 text-sm text-muted list-disc pl-5">
+            <li data-i18n="skills.col3li1">Problem Solving & Communication</li>
+            <li data-i18n="skills.col3li2">Teamwork & Time Management</li>
+            <li data-i18n="skills.col3li3">Arabic (Native), English (Excellent)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience" class="py-12">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-2xl md:text-3xl font-bold mb-6" data-i18n="exp.title">Experience</h2>
+      <div class="space-y-4">
+        <article class="glass rounded-2xl p-6">
+          <div class="flex items-center justify-between flex-wrap gap-2">
+            <h3 class="font-semibold" data-i18n="exp.role1">Intern — Nile University Research Center</h3>
+            <span class="text-xs text-muted">2024</span>
+          </div>
+          <ul class="mt-3 list-disc pl-5 text-sm text-muted space-y-1">
+            <li data-i18n="exp.role1li1">Collected, cleaned, transformed, and integrated multi‑source datasets.</li>
+            <li data-i18n="exp.role1li2">Performed clustering analysis and presented findings.</li>
+          </ul>
+        </article>
+        <article class="glass rounded-2xl p-6">
+          <div class="flex items-center justify-between flex-wrap gap-2">
+            <h3 class="font-semibold" data-i18n="exp.role2">Intern — DPI (Egyptian Telecom Ministry)</h3>
+            <span class="text-xs text-muted">2025</span>
+          </div>
+          <ul class="mt-3 list-disc pl-5 text-sm text-muted space-y-1">
+            <li data-i18n="exp.role2li1">Built dashboards in Excel and Power BI.</li>
+            <li data-i18n="exp.role2li2">Led data cleaning and professional Excel workflows.</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="py-12">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="text-2xl md:text-3xl font-bold" data-i18n="proj.title">Highlighted Projects</h2>
+        <a href="https://github.com/MuhammedMegahed" target="_blank" class="text-sm hover:underline" data-i18n="proj.link">See all on GitHub →</a>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-4">
+        <a href="https://github.com/MuhammedMegahed/Weather-and-heatwave-forecasting-using-quantum-Machine-learning" target="_blank" class="glass rounded-2xl p-6 block hover:ring-1 hover:ring-white/30 transition">
+          <h3 class="font-semibold" data-i18n="proj.p1.title">Heatwave Forecasting with Quantum ML</h3>
+          <p class="mt-2 text-sm text-muted" data-i18n="proj.p1.desc">Collected airport weather data, compared Classical LSTM vs Quantum LSTM, and built analysis visuals.</p>
+          <div class="mt-3 text-xs text-muted">Python • LSTM • QML • Viz</div>
+        </a>
+        <a href="https://github.com/MuhammedMegahed/Excel-pharmaceutical-Dashboard-" target="_blank" class="glass rounded-2xl p-6 block hover:ring-1 hover:ring-white/30 transition">
+          <h3 class="font-semibold" data-i18n="proj.p2.title">Pharmaceutical Analytics Dashboard</h3>
+          <p class="mt-2 text-sm text-muted" data-i18n="proj.p2.desc">End‑to‑end Excel dashboard for KPIs, cleaning to insights.</p>
+          <div class="mt-3 text-xs text-muted">Excel • BI • KPIs</div>
+        </a>
+        <a href="https://github.com/MuhammedMegahed/Spotify-Power-Bi-Analysis" target="_blank" class="glass rounded-2xl p-6 block hover:ring-1 hover:ring-white/30 transition">
+          <h3 class="font-semibold" data-i18n="proj.p3.title">Spotify Power BI Analysis</h3>
+          <p class="mt-2 text-sm text-muted" data-i18n="proj.p3.desc">Data wrangling, modeling, and visual storytelling in Power BI.</p>
+          <div class="mt-3 text-xs text-muted">Power BI • DAX • Viz</div>
+        </a>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-4 mt-4">
+        <div class="glass rounded-2xl p-6">
+          <h3 class="font-semibold" data-i18n="proj.p4.title">SpaceX Launch Analysis</h3>
+          <p class="mt-2 text-sm text-muted" data-i18n="proj.p4.desc">Web‑scraped SpaceX dataset, geospatial viz with Folium, predictive modeling for launch success.</p>
+          <div class="mt-3 text-xs text-muted">Python • Folium • ML</div>
+        </div>
+        <div class="glass rounded-2xl p-6">
+          <h3 class="font-semibold" data-i18n="proj.p5.title">Kidney Disease Classification</h3>
+          <p class="mt-2 text-sm text-muted" data-i18n="proj.p5.desc">Preprocessing, model comparison, and medical data synthesis pipeline.</p>
+          <div class="mt-3 text-xs text-muted">Python • Scikit‑learn</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education" class="py-12">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-2xl md:text-3xl font-bold mb-6" data-i18n="edu.title">Education</h2>
+      <div class="glass rounded-2xl p-6">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <h3 class="font-semibold" data-i18n="edu.item">Nile University — B.Sc. in IT & Computer Science</h3>
+          <span class="text-xs text-muted" data-i18n="edu.years">2021–2025 • GPA 3.89</span>
+        </div>
+        <p class="mt-2 text-sm text-muted" data-i18n="edu.coursework">Coursework: Data Science, Machine Learning, Data Visualization, Algorithms.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATES & PUBLICATIONS -->
+  <section id="certs" class="py-12">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-2xl md:text-3xl font-bold mb-6" data-i18n="cert.title">Certificates & Publications</h2>
+      <div class="grid md:grid-cols-2 gap-4">
+        <a target="_blank" href="https://www.coursera.org/account/accomplishments/professional-cert/MZ3YD6NE471O" class="glass rounded-2xl p-6 block hover:ring-1 hover:ring-white/30">
+          <h3 class="font-semibold" data-i18n="cert.ibm">IBM Data Science Professional Certificate</h3>
+          <p class="mt-2 text-sm text-muted" data-i18n="cert.link">Credential link</p>
+        </a>
+        <a target="_blank" href="https://ieeexplore.ieee.org/document/10753260" class="glass rounded-2xl p-6 block hover:ring-1 hover:ring-white/30">
+          <h3 class="font-semibold" data-i18n="cert.ieee">IEEE: Diabetic Retinopathy Detection (Paper)</h3>
+          <p class="mt-2 text-sm text-muted" data-i18n="cert.ieeedesc">PySpark + VGG16 features + MLP classification.</p>
+        </a>
+        <div class="glass rounded-2xl p-6">
+          <h3 class="font-semibold" data-i18n="cert.ugrf">UGRF 17 & 18 — Participant</h3>
+          <p class="mt-2 text-sm text-muted" data-i18n="cert.ugrfdesc">Undergraduate Research Forums at Nile University.</p>
+        </div>
+        <div class="glass rounded-2xl p-6">
+          <h3 class="font-semibold" data-i18n="cert.imsa">IMSA 2025 — Participation</h3>
+          <p class="mt-2 text-sm text-muted" data-i18n="cert.imsadesc">3rd International IEEE Conference on Intelligent Methods, Systems, and Applications.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="py-16">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="glass rounded-2xl p-8 md:p-12">
+        <h2 class="text-2xl md:text-3xl font-bold" data-i18n="contact.title">Let’s work together</h2>
+        <p class="mt-2 text-muted" data-i18n="contact.subtitle">Open to internships, research collaborations, and data analyst / data scientist roles.</p>
+
+        <div class="mt-6 grid md:grid-cols-2 gap-6">
+          <a href="mailto:muhammedmegahed997@gmail.com" class="glass rounded-xl p-5 hover:bg-black/5 dark:hover:bg-white/10">
+            <div class="text-sm text-muted" data-i18n="contact.emailLabel">Email</div>
+            <div class="font-semibold">muhammedmegahed997@gmail.com</div>
+          </a>
+          <a href="tel:+201550167733" class="glass rounded-xl p-5 hover:bg-black/5 dark:hover:bg-white/10">
+            <div class="text-sm text-muted" data-i18n="contact.phoneLabel">Phone</div>
+            <div class="font-semibold">+20 155 016 7733</div>
+          </a>
+          <a href="https://www.linkedin.com/in/muhammad-mugahed-ali-616669240/" target="_blank" class="glass rounded-xl p-5 hover:bg-black/5 dark:hover:bg-white/10">
+            <div class="text-sm text-muted">LinkedIn</div>
+            <div class="font-semibold">/muhammad-mugahed-ali</div>
+          </a>
+          <a href="https://github.com/MuhammedMegahed" target="_blank" class="glass rounded-xl p-5 hover:bg-black/5 dark:hover:bg-white/10">
+            <div class="text-sm text-muted">GitHub</div>
+            <div class="font-semibold">@MuhammedMegahed</div>
+          </a>
+        </div>
+
+        <div class="mt-8 text-xs text-muted">© <span id="year"></span> <span data-i18n="footer.name">Muhammed Megahed Ali</span> — <span data-i18n="footer.built">Built with HTML + Tailwind</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER SPACER -->
+  <footer class="py-8"></footer>
+
+  <script>
+    // === i18n strings ===
+    const STRINGS = {
+      en: {
+        'nav.about':'About','nav.skills':'Skills','nav.experience':'Experience','nav.projects':'Projects','nav.education':'Education','nav.certs':'Certificates','nav.contact':'Contact',
+        'hero.name':'Muhammed Megahed','hero.tag':'Data Scientist • Python • SQL • Power BI • Machine Learning','hero.viewProjects':'View Projects','hero.hireMe':'Hire Me','hero.email':'Email','hero.location':'Haram, Giza • English & Arabic • Open to internships, research, and data roles','hero.phoneLabel':'Phone:','hero.emailLabel':'Email:','hero.gpa':'GPA','hero.projects':'Projects','hero.internships':'Internships',
+        'about.title':'About','about.p1':'Aspiring Data Scientist with a strong academic background from Nile University and hands-on experience building predictive models and insightful dashboards. Skilled in Python, SQL, Power BI, and core ML concepts. Passionate about turning data into meaningful, decision-ready insights.',
+        'about.p2':'I thrive on curiosity, problem solving, and collaboration—seeking opportunities across research, internships, and data-driven roles to create measurable impact.',
+        'skills.title':'Skills','skills.col1':'Data & ML','skills.col1li1':'Python (Pandas, NumPy, Matplotlib, Scikit‑learn)','skills.col1li2':'Regression, Classification, Basic Deep Learning','skills.col1li3':'EDA, Feature Engineering','skills.col2':'BI & Dashboards','skills.col2li1':'Power BI (Modeling, DAX, Transformations)','skills.col2li2':'Excel Dashboards & Data Cleaning','skills.col2li3':'Plotly, Folium (Geo‑viz)','skills.col3':'Professional','skills.col3li1':'Problem Solving & Communication','skills.col3li2':'Teamwork & Time Management','skills.col3li3':'Arabic (Native), English (Excellent)',
+        'exp.title':'Experience','exp.role1':'Intern — Nile University Research Center','exp.role1li1':'Collected, cleaned, transformed, and integrated multi‑source datasets.','exp.role1li2':'Performed clustering analysis and presented findings.','exp.role2':'Intern — DPI (Egyptian Telecom Ministry)','exp.role2li1':'Built dashboards in Excel and Power BI.','exp.role2li2':'Led data cleaning and professional Excel workflows.',
+        'proj.title':'Highlighted Projects','proj.link':'See all on GitHub →','proj.p1.title':'Heatwave Forecasting with Quantum ML','proj.p1.desc':'Collected airport weather data, compared Classical LSTM vs Quantum LSTM, and built analysis visuals.','proj.p2.title':'Pharmaceutical Analytics Dashboard','proj.p2.desc':'End‑to‑end Excel dashboard for KPIs, cleaning to insights.','proj.p3.title':'Spotify Power BI Analysis','proj.p3.desc':'Data wrangling, modeling, and visual storytelling in Power BI.','proj.p4.title':'SpaceX Launch Analysis','proj.p4.desc':'Web‑scraped SpaceX dataset, geospatial viz with Folium, predictive modeling for launch success.','proj.p5.title':'Kidney Disease Classification','proj.p5.desc':'Preprocessing, model comparison, and medical data synthesis pipeline.',
+        'edu.title':'Education','edu.item':'Nile University — B.Sc. in IT & Computer Science','edu.years':'2021–2025 • GPA 3.89','edu.coursework':'Coursework: Data Science, Machine Learning, Data Visualization, Algorithms.',
+        'cert.title':'Certificates & Publications','cert.ibm':'IBM Data Science Professional Certificate','cert.link':'Credential link','cert.ieee':'IEEE: Diabetic Retinopathy Detection (Paper)','cert.ieeedesc':'PySpark + VGG16 features + MLP classification.','cert.ugrf':'UGRF 17 & 18 — Participant','cert.ugrfdesc':'Undergraduate Research Forums at Nile University.','cert.imsa':'IMSA 2025 — Participation','cert.imsadesc':'3rd International IEEE Conference on Intelligent Methods, Systems, and Applications.',
+        'contact.title':'Let’s work together','contact.subtitle':'Open to internships, research collaborations, and data analyst / data scientist roles.','contact.emailLabel':'Email','contact.phoneLabel':'Phone',
+        'footer.name':'Muhammed Megahed Ali','footer.built':'Built with HTML + Tailwind'
+      },
+      ar: {
+        'nav.about':'نبذة','nav.skills':'المهارات','nav.experience':'الخبرات','nav.projects':'المشاريع','nav.education':'التعليم','nav.certs':'الشهادات','nav.contact':'تواصل',
+        'hero.name':'محمد مجاهد','hero.tag':'عالم بيانات • بايثون • SQL • باور بي آي • تعلّم الآلة','hero.viewProjects':'عرض المشاريع','hero.hireMe':'وظّفني','hero.email':'البريد الإلكتروني','hero.location':'الهرم، الجيزة • العربية والإنجليزية • متاح للتدريب والبحث ووظائف البيانات','hero.phoneLabel':'الهاتف:','hero.emailLabel':'البريد:','hero.gpa':'المعدل','hero.projects':'مشاريع','hero.internships':'تدريبات',
+        'about.title':'نبذة','about.p1':'طالب علم بيانات بخلفية أكاديمية قوية من جامعة النيل مع خبرة عملية في بناء نماذج تنبؤية ولوحات معلومات. ماهر في بايثون وSQL وباور بي آي ومفاهيم التعلم الآلي الأساسية. شغوف بتحويل البيانات إلى رؤى قابلة لاتخاذ القرار.',
+        'about.p2':'أستمتع بالفضول وحل المشكلات والعمل الجماعي — وأسعى لفرص في البحث والتدريب والأدوار المعتمدة على البيانات لإحداث أثر ملموس.',
+        'skills.title':'المهارات','skills.col1':'البيانات وتعلّم الآلة','skills.col1li1':'بايثون (Pandas, NumPy, Matplotlib, Scikit‑learn)','skills.col1li2':'انحدار، تصنيف، تعلّم عميق أساسي','skills.col1li3':'الاستكشاف الهندسي للميزات','skills.col2':'ذكاء الأعمال ولوحات المعلومات','skills.col2li1':'باور بي آي (النمذجة، DAX، التحويلات)','skills.col2li2':'لوحات إكسل وتنظيف البيانات','skills.col2li3':'Plotly و Folium (جغرافي)','skills.col3':'مهارات مهنية','skills.col3li1':'حل المشكلات والتواصل','skills.col3li2':'العمل الجماعي وإدارة الوقت','skills.col3li3':'العربية (لغة أم)، الإنجليزية (ممتازة)',
+        'exp.title':'الخبرات','exp.role1':'متدرب — مركز أبحاث جامعة النيل','exp.role1li1':'جمع وتنظيف وتحويل ودمج بيانات من مصادر متعددة.','exp.role1li2':'أجريتُ تحليل التجميع وقدّمت النتائج.','exp.role2':'متدرب — DPI (وزارة الاتصالات المصرية)','exp.role2li1':'بناء لوحات معلومات في إكسل وباور بي آي.','exp.role2li2':'قيادة تنظيف البيانات وتبني سير عمل احترافي في إكسل.',
+        'proj.title':'مشاريع مميزة','proj.link':'شاهد الكل على GitHub →','proj.p1.title':'تنبؤ بموجات الحر باستخدام تعلّم آلي كمي','proj.p1.desc':'جمع بيانات الطقس من المطارات ومقارنة LSTM الكلاسيكي مقابل الكمي وبناء رسومات تحليلية.','proj.p2.title':'لوحة تحليلات للأدوية','proj.p2.desc':'لوحة مؤشرات متكاملة في إكسل من التنظيف حتى الرؤى.','proj.p3.title':'تحليل Spotify بباور بي آي','proj.p3.desc':'تنظيف ونمذجة البيانات وسرد بصري داخل باور بي آي.','proj.p4.title':'تحليل إطلاقات SpaceX','proj.p4.desc':'جمع بيانات SpaceX وعرض جغرافي بـ Folium ونمذجة احتمالية النجاح.','proj.p5.title':'تصنيف أمراض الكلى','proj.p5.desc':'تهيئة البيانات ومقارنة النماذج وخط أنابيب لتوليد بيانات طبية.',
+        'edu.title':'التعليم','edu.item':'جامعة النيل — بكالوريوس نظم المعلومات وعلوم الحاسب','edu.years':'2021–2025 • المعدل 3.89','edu.coursework':'مقررات: علم البيانات، تعلّم الآلة، التصور البياني، الخوارزميات.',
+        'cert.title':'الشهادات والمنشورات','cert.ibm':'شهادة محترف علم البيانات من IBM','cert.link':'رابط الاعتماد','cert.ieee':'IEEE: اكتشاف اعتلال الشبكية السكري (ورقة بحثية)','cert.ieeedesc':'PySpark + ميزات VGG16 + تصنيف MLP.','cert.ugrf':'UGRF 17 و 18 — مشارك','cert.ugrfdesc':'منتديات البحوث الجامعية بجامعة النيل.','cert.imsa':'IMSA 2025 — مشاركة','cert.imsadesc':'المؤتمر الدولي الثالث لطرق ونظم وتطبيقات الذكاء.',
+        'contact.title':'خلّينا نشتغل سوا','contact.subtitle':'متاح للتدريب والتعاون البحثي ووظائف محلل/عالم البيانات.','contact.emailLabel':'البريد الإلكتروني','contact.phoneLabel':'الهاتف',
+        'footer.name':'محمد مجاهد علي','footer.built':'تم البناء بـ HTML + Tailwind'
+      }
+    };
+
+    // === helpers ===
+    const $ = (sel, root=document) => root.querySelector(sel);
+    const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+
+    function applyI18n(lang){
+      const dict = STRINGS[lang] || STRINGS.en;
+      $$('[data-i18n]').forEach(el=>{
+        const key = el.getAttribute('data-i18n');
+        if(dict[key]) el.textContent = dict[key];
+      });
+      // dir + lang attrs
+      const html = document.documentElement;
+      html.setAttribute('lang', lang === 'ar' ? 'ar' : 'en');
+      html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+      // swap list padding for RTL readability
+      $$('[class*="list-"]').forEach(el=>{ el.classList.toggle('pl-5', lang!=='ar'); el.classList.toggle('pr-5', lang==='ar'); });
+      // Update toggle label
+      $('#langLabel').textContent = lang === 'ar' ? 'EN' : 'AR';
+    }
+
+    function applyTheme(theme){
+      // theme: 'dark' | 'light'
+      const html = document.documentElement;
+      if(theme === 'light'){
+        html.classList.remove('dark');
+        html.classList.add('light');
+        document.body.classList.remove('bg-aurora');
+        document.body.classList.add('light-bg');
+      } else {
+        html.classList.add('dark');
+        html.classList.remove('light');
+        document.body.classList.add('bg-aurora');
+        document.body.classList.remove('light-bg');
+      }
+      localStorage.setItem('theme', theme);
+    }
+
+    // === init from localStorage or OS preference ===
+    const savedLang = localStorage.getItem('lang') || 'en';
+    const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    applyI18n(savedLang);
+    applyTheme(savedTheme);
+
+    // === event listeners ===
+    $('#langToggle').addEventListener('click', ()=>{
+      const current = document.documentElement.getAttribute('lang') === 'ar' ? 'ar' : 'en';
+      const next = current === 'ar' ? 'en' : 'ar';
+      localStorage.setItem('lang', next);
+      applyI18n(next);
+    });
+
+    $('#themeToggle').addEventListener('click', ()=>{
+      const isLight = document.documentElement.classList.contains('light');
+      applyTheme(isLight ? 'dark' : 'light');
+    });
+
+    // Year
+    $('#year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
